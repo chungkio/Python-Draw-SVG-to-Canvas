@@ -1,0 +1,22 @@
+import cairosvg
+from PIL import Image, ImageTk
+import tkinter as tk
+
+# Load the SVG file and convert it to a PNG image
+svg_data = open('image.svg', 'rb').read()
+png_data = cairosvg.svg2png(bytestring=svg_data)
+
+# Load the PNG image into a PIL image
+pil_image = Image.open(io.BytesIO(png_data))
+
+# Create a Tkinter window and canvas
+root = tk.Tk()
+canvas = tk.Canvas(root, width=pil_image.width, height=pil_image.height)
+canvas.pack()
+
+# Draw the PIL image onto the Tkinter canvas
+image = ImageTk.PhotoImage(pil_image)
+canvas.create_image(0, 0, anchor='nw', image=image)
+
+# Start the Tkinter mainloop
+root.mainloop()
